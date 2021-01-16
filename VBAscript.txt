@@ -1,0 +1,17 @@
+Sub 两列组合() '代码改编自Excel880.com
+    Dim Dn, En, IDstart, IDend, i, j, k '声明变量
+    Dn = [D1048576].End(xlUp).Row '将D列最后一个非空单元格的行号赋给Dn
+    En = [E1048576].End(xlUp).Row
+    IDstart = Range("D2:D" & Dn) '把D列非空区域赋给数组IDstart
+    IDend = Range("E2:E" & En)
+    ReDim pair(1 To Dn * En, 0) '声明动态数组pair，该数组包含Dn*En个元素
+    For i = 1 To UBound(IDstart) 'For循环，步长默认值为1，i从1到数组IDstart的上界
+        For j = i + 1 To UBound(IDend) 'j从2到数组IDend的上界
+            Key = IDstart(i, 1) & "," & IDend(j, 1) '数组IDstart与IDend合并，以逗号分隔，并将该字符串赋给Key
+            k = k + 1
+            pair(k, 0) = Key '将Key赋给动态数组pair，参与For循环
+        Next
+    Next
+    [F2:F1048576].Clear
+    [F2].Resize(k) = pair '从F2单元格开始，扩展区域为k行，写入数组pair
+End Sub
